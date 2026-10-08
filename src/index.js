@@ -25,6 +25,11 @@ const ALLOWED_TIMELINES = new Set([
   "Exploratory",
 ]);
 
+const ALLOWED_HOSTNAMES = new Set([
+  "trellisdigitalhq.com",
+  "www.trellisdigitalhq.com",
+]);
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -44,8 +49,8 @@ async function handleContact(request, env) {
     });
   }
 
-  if (!env.NOTION_TOKEN || !env.NOTION_DATABASE_ID) {
-    console.error("Contact API is missing Notion configuration.");
+  if (!env.NOTION_TOKEN || !env.NOTION_DATABASE_ID || !env.TURNSTILE_SECRET) {
+    console.error("Contact API is missing required configuration.");
     return json({ ok: false, error: "Contact service is not configured." }, 503);
   }
 
@@ -76,8 +81,29 @@ async function handleContact(request, env) {
     return json({ ok: false, error: "Invalid request body." }, 400);
   }
 
+  // Honeypot field. Bots that populate it are silently accepted without creating a lead.
   if (string(body.website)) {
     return json({ ok: true }, 200);
+  }
+
+  const turnstileToken = clean(body["cf-turnstile-response"], 2_048);
+  if (!turnstileToken) {
+    return json({ ok: false, error: "Please complete the security check." }, 400);
+  }
+
+  const turnstileResult = await verifyTurnstile(
+    turnstileToken,
+    env.TURNSTILE_SECRET,
+    request.headers.get("CF-Connecting-IP") || "",
+  );
+
+  if (!turnstileResult.success || !ALLOWED_HOSTNAMES.has(turnstileResult.hostname || "")) {
+    console.warn("Turnstile verification failed", {
+      success: turnstileResult.success,
+      hostname: turnstileResult.hostname,
+      errors: turnstileResult["error-codes"],
+    });
+    return json({ ok: false, error: "Security verification failed. Please try again." }, 403);
   }
 
   const contactName = clean(body.contactName, 120);
@@ -136,6 +162,29 @@ async function handleContact(request, env) {
   }
 
   return json({ ok: true }, 201);
+}
+
+async function verifyTurnstile(token, secret, remoteIp) {
+  const formData = new FormData();
+  formData.set("secret", secret);
+  formData.set("response", token);
+  if (remoteIp) formData.set("remoteip", remoteIp);
+
+  try {
+    const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      return { success: false, "error-codes": ["siteverify-http-error"] };
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Turnstile Siteverify request failed", error);
+    return { success: false, "error-codes": ["siteverify-request-failed"] };
+  }
 }
 
 function normalizeOptionalSelect(value, allowedValues, fallback = "Not Sure") {
