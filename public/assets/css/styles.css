@@ -208,3 +208,23 @@
   .credibility-grid p { margin:0; color:#D9E9EF; font-size:1rem; }
   .credibility-note { margin:1.5rem 0 0; max-width:53rem; font-size:.88rem; color:#BDD4DF; }
   @media (max-width:48rem) { .credibility-grid { grid-template-columns:1fr; } }
+
+  /* Lighten selected content areas while keeping the navy/teal identity. */
+  body { background:#F4F7F9; color:#243746; }
+  header { background:#FFFFFF; border-bottom:1px solid #D7E3E8; }
+  header img { background:#FFFFFF; }
+  .site-nav a { color:#002648; }
+  .site-nav a:hover { color:#007F98; }
+  #services { background:#F7FAFB; border-top-color:#D7E3E8; }
+  #services h2 { color:#002648; }
+  #services .section-intro { color:#415766; }
+  .service-card { background:#FFFFFF; border-color:#D5E4E9; box-shadow:0 10px 24px rgba(0,38,72,.07); }
+  .service-card h3 { color:#002648; }
+  .service-card p { color:#415766; }
+  #approach { background:#EDF3F6; border-top-color:#D6E3E8; }
+  #approach h2 { color:#002648; }
+  #approach p { color:#415766; }
+  .steps > div { background:#FFFFFF; border-color:#D5E4E9; }
+  .steps h3 { color:#002648; }
+  .step-number { color:#007F98; }
+  footer { background:#F7FAFB; border-top:1px solid #D7E3E8; color:#5E6C76; }
