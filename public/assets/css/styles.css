@@ -166,3 +166,34 @@
     .service-card { transition: transform .18s ease, box-shadow .18s ease; }
     .service-card:hover { transform:translateY(-3px); box-shadow:0 14px 32px rgba(0,38,72,.11); }
   }
+
+  /* Darker, more saturated editorial treatment: reduce white surfaces. */
+  :root { --paper:#071F33; --ink:#D9E7EF; --line:#24465C; }
+  body { background:#071F33; color:#D9E7EF; }
+  header { background:#082B44; border-bottom:1px solid #18526A; }
+  header img { background:transparent; }
+  .site-nav a { color:#E9F4F7; }
+  .site-nav a:hover { color:#78E0E9; }
+  .hero { border-top-color:#01A4BB; background:linear-gradient(115deg,#00192E 0%,#003E5B 62%,#087788 100%); }
+  #services { background:#0A2A42; border-top-color:#17536A; }
+  #services h2, #approach h2 { color:#F1F8FB; }
+  #services .section-intro, #approach p { color:#D0E2EA; }
+  .service-card { background:#103951; border-color:#286078; box-shadow:none; }
+  .service-card h3 { color:#F5FBFD; }
+  .service-card p { color:#D5E7ED; }
+  #problems, .muted-section { background:#075367; border-top-color:#17778B; }
+  #problems h2 { color:#FFFFFF; }
+  #problems .section-intro, #problems .problem-list li { color:#E2F2F4; }
+  #problems .eyebrow { color:#A2EDF1; }
+  .problem-list li { border-left-color:#65D5DF; }
+  #approach { background:#08283F; border-top-color:#20536B; }
+  .steps > div { background:#103951; border-color:#286078; }
+  .steps h3 { color:#F1F8FB; }
+  .step-number { color:#8AE6E9; }
+  .contact { background:linear-gradient(125deg,#001525 0%,#002C47 100%); }
+  footer { background:#061A2B; border-top:1px solid #17445C; color:#C3D7E2; }
+  .eyebrow { color:#74DDE5; }
+  a:focus-visible { outline-color:#8AE6E9; }
+  @media (prefers-reduced-motion: no-preference) {
+    .service-card:hover { box-shadow:0 14px 32px rgba(0,0,0,.2); }
+  }
