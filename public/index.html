@@ -10,6 +10,7 @@
   <link rel="canonical" href="https://trellisdigitalhq.com/">
   <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
   <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="/assets/css/contact-form.css">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Trellis Digital LLC">
@@ -159,16 +160,99 @@
           <h2 id="contact-title">Let’s talk about what is slowing your business down.</h2>
           <p class="contact-lede">Not sure what you need yet? That is okay. Start by describing the problem, the tools you use today, or the result you are trying to achieve.</p>
           <p>We will use that conversation to determine whether the right next step is planning, implementation, integration, custom development, or something simpler.</p>
+          <div class="contact-alt">
+            <p>Prefer to reach out directly?</p>
+            <div class="contact-alt-links">
+              <a href="mailto:terrance@trellisdigitalhq.com">terrance@trellisdigitalhq.com</a>
+              <a href="tel:+13146438851">(314) 643-8851</a>
+            </div>
+          </div>
         </div>
         <div class="contact-panel">
-          <h3>Start a conversation</h3>
-          <p>For now, send the problem directly. A dedicated secure web intake form is the next infrastructure step.</p>
-          <a class="contact-button" href="mailto:terrance@trellisdigitalhq.com?subject=Project%20Inquiry%20-%20Trellis%20Digital">Email your project details</a>
-          <dl>
-            <dt>Email</dt><dd><a href="mailto:terrance@trellisdigitalhq.com">terrance@trellisdigitalhq.com</a></dd>
-            <dt>Phone</dt><dd><a href="tel:+13146438851">(314) 643-8851</a></dd>
-            <dt>Based in</dt><dd>St. Louis, Missouri</dd>
-          </dl>
+          <h3>Tell us about your project</h3>
+          <p>Share the business problem first. You do not need to have the technical solution figured out.</p>
+
+          <form class="contact-form" data-contact-form novalidate>
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="contact-name">Name *</label>
+                <input id="contact-name" name="contactName" type="text" autocomplete="name" required maxlength="120">
+                <p class="field-error" data-field-error="contactName" aria-live="polite"></p>
+              </div>
+
+              <div class="form-field">
+                <label for="company">Company</label>
+                <input id="company" name="company" type="text" autocomplete="organization" maxlength="160">
+                <p class="field-error" data-field-error="company" aria-live="polite"></p>
+              </div>
+
+              <div class="form-field">
+                <label for="email">Email *</label>
+                <input id="email" name="email" type="email" autocomplete="email" required maxlength="254">
+                <p class="field-error" data-field-error="email" aria-live="polite"></p>
+              </div>
+
+              <div class="form-field">
+                <label for="phone">Phone</label>
+                <input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="40">
+                <p class="field-error" data-field-error="phone" aria-live="polite"></p>
+              </div>
+
+              <div class="form-field full">
+                <label for="problem">What are you trying to solve? *</label>
+                <textarea id="problem" name="problem" required minlength="20" maxlength="2000" placeholder="Describe the workflow, system, or business problem that is slowing you down."></textarea>
+                <p class="field-help">A few sentences are enough to get started.</p>
+                <p class="field-error" data-field-error="problem" aria-live="polite"></p>
+              </div>
+
+              <div class="form-field">
+                <label for="service-interest">Service interest *</label>
+                <select id="service-interest" name="serviceInterest" required>
+                  <option value="" selected disabled>Select an option</option>
+                  <option>Consulting &amp; Planning</option>
+                  <option>Implementation &amp; Integration</option>
+                  <option>Custom Development</option>
+                  <option>Not Sure</option>
+                </select>
+                <p class="field-error" data-field-error="serviceInterest" aria-live="polite"></p>
+              </div>
+
+              <div class="form-field">
+                <label for="budget-range">Estimated budget *</label>
+                <select id="budget-range" name="budgetRange" required>
+                  <option value="" selected disabled>Select a range</option>
+                  <option>Under $1000</option>
+                  <option>$1000–$2500</option>
+                  <option>$2500–$5000</option>
+                  <option>$5000–$10000</option>
+                  <option>$10000+</option>
+                  <option>Not Sure</option>
+                </select>
+                <p class="field-error" data-field-error="budgetRange" aria-live="polite"></p>
+              </div>
+
+              <div class="form-field full">
+                <label for="timeline">Timeline *</label>
+                <select id="timeline" name="timeline" required>
+                  <option value="" selected disabled>Select a timeline</option>
+                  <option>ASAP</option>
+                  <option>1–4 weeks</option>
+                  <option>1–3 months</option>
+                  <option>3+ months</option>
+                  <option>Exploratory</option>
+                </select>
+                <p class="field-error" data-field-error="timeline" aria-live="polite"></p>
+              </div>
+            </div>
+
+            <div class="honeypot" aria-hidden="true">
+              <label for="website">Website</label>
+              <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+            </div>
+
+            <button class="contact-submit" type="submit">Send project inquiry</button>
+            <p class="form-status" data-form-status aria-live="polite"></p>
+          </form>
         </div>
       </div>
     </section>
@@ -184,5 +268,6 @@
       <span>Technology consulting & engineering · St. Louis, Missouri</span>
     </div>
   </footer>
+  <script src="/assets/js/contact-form.js" defer></script>
 </body>
 </html>
