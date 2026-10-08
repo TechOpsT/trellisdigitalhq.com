@@ -170,18 +170,18 @@
         </div>
         <div class="contact-panel">
           <h3>Tell us about your project</h3>
-          <p>Share the business problem first. You do not need to have the technical solution figured out.</p>
+          <p>Share the business problem first. Only your name, email, and a short description are required.</p>
 
           <form class="contact-form" data-contact-form novalidate>
             <div class="form-grid">
               <div class="form-field">
                 <label for="contact-name">Name *</label>
-                <input id="contact-name" name="contactName" type="text" autocomplete="name" required maxlength="120">
+                <input id="contact-name" name="contactName" type="text" autocomplete="name" required minlength="2" maxlength="120">
                 <p class="field-error" data-field-error="contactName" aria-live="polite"></p>
               </div>
 
               <div class="form-field">
-                <label for="company">Company</label>
+                <label for="company">Company <span class="optional">(optional)</span></label>
                 <input id="company" name="company" type="text" autocomplete="organization" maxlength="160">
                 <p class="field-error" data-field-error="company" aria-live="polite"></p>
               </div>
@@ -193,7 +193,7 @@
               </div>
 
               <div class="form-field">
-                <label for="phone">Phone</label>
+                <label for="phone">Phone <span class="optional">(optional)</span></label>
                 <input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="40">
                 <p class="field-error" data-field-error="phone" aria-live="polite"></p>
               </div>
@@ -206,9 +206,9 @@
               </div>
 
               <div class="form-field">
-                <label for="service-interest">Service interest *</label>
-                <select id="service-interest" name="serviceInterest" required>
-                  <option value="" selected disabled>Select an option</option>
+                <label for="service-interest">Service interest <span class="optional">(optional)</span></label>
+                <select id="service-interest" name="serviceInterest">
+                  <option value="" selected>Not sure yet</option>
                   <option>Consulting &amp; Planning</option>
                   <option>Implementation &amp; Integration</option>
                   <option>Custom Development</option>
@@ -218,9 +218,9 @@
               </div>
 
               <div class="form-field">
-                <label for="budget-range">Estimated budget *</label>
-                <select id="budget-range" name="budgetRange" required>
-                  <option value="" selected disabled>Select a range</option>
+                <label for="budget-range">Estimated budget <span class="optional">(optional)</span></label>
+                <select id="budget-range" name="budgetRange">
+                  <option value="" selected>Not sure yet</option>
                   <option>Under $1000</option>
                   <option>$1000–$2500</option>
                   <option>$2500–$5000</option>
@@ -228,13 +228,14 @@
                   <option>$10000+</option>
                   <option>Not Sure</option>
                 </select>
+                <p class="field-help">A range helps with scoping, but you can leave this open.</p>
                 <p class="field-error" data-field-error="budgetRange" aria-live="polite"></p>
               </div>
 
               <div class="form-field full">
-                <label for="timeline">Timeline *</label>
-                <select id="timeline" name="timeline" required>
-                  <option value="" selected disabled>Select a timeline</option>
+                <label for="timeline">Timeline <span class="optional">(optional)</span></label>
+                <select id="timeline" name="timeline">
+                  <option value="" selected>Exploratory / not sure yet</option>
                   <option>ASAP</option>
                   <option>1–4 weeks</option>
                   <option>1–3 months</option>
@@ -251,7 +252,8 @@
             </div>
 
             <button class="contact-submit" type="submit">Send project inquiry</button>
-            <p class="form-status" data-form-status aria-live="polite"></p>
+            <p class="form-privacy">By submitting, you agree that Trellis Digital may use the information you provide to respond to your inquiry. See our <a href="/privacy.html">Privacy Policy</a>.</p>
+            <p class="form-status" data-form-status tabindex="-1" aria-live="polite"></p>
           </form>
         </div>
       </div>
