@@ -1,9 +1,12 @@
 (() => {
+  const TURNSTILE_SITE_KEY = "0x4AAAAAAFRx9LOIb6aWzAf8";
   const form = document.querySelector("[data-contact-form]");
   if (!form) return;
 
   const submitButton = form.querySelector("button[type='submit']");
   const status = form.querySelector("[data-form-status]");
+
+  installTurnstile(form, submitButton);
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -11,6 +14,12 @@
 
     if (!form.checkValidity()) {
       form.reportValidity();
+      return;
+    }
+
+    const turnstileToken = form.querySelector("input[name='cf-turnstile-response']")?.value || "";
+    if (!turnstileToken) {
+      setStatus(status, "Please complete the security check before submitting.", "error");
       return;
     }
 
@@ -36,6 +45,7 @@
       }
 
       form.reset();
+      window.turnstile?.reset();
       setStatus(
         status,
         "Thanks — your inquiry is in. We’ll review the details and follow up using the email you provided.",
@@ -43,6 +53,7 @@
       );
       status.focus({ preventScroll: true });
     } catch (error) {
+      window.turnstile?.reset();
       setStatus(
         status,
         error.message || "We could not submit your inquiry. Please email terrance@trellisdigitalhq.com.",
@@ -53,6 +64,24 @@
       submitButton.textContent = "Send project inquiry";
     }
   });
+
+  function installTurnstile(targetForm, beforeNode) {
+    const container = document.createElement("div");
+    container.className = "cf-turnstile turnstile-wrap";
+    container.dataset.sitekey = TURNSTILE_SITE_KEY;
+    container.dataset.theme = "auto";
+    container.dataset.size = "flexible";
+    targetForm.insertBefore(container, beforeNode);
+
+    if (!document.querySelector("script[data-turnstile-script]")) {
+      const script = document.createElement("script");
+      script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+      script.async = true;
+      script.defer = true;
+      script.dataset.turnstileScript = "true";
+      document.head.appendChild(script);
+    }
+  }
 
   function clearErrors(targetForm) {
     targetForm.querySelectorAll("[data-field-error]").forEach((node) => {
