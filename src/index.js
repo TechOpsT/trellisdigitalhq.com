@@ -76,7 +76,6 @@ async function handleContact(request, env) {
     return json({ ok: false, error: "Invalid request body." }, 400);
   }
 
-  // Honeypot field. Real visitors never see or populate this.
   if (string(body.website)) {
     return json({ ok: true }, 200);
   }
@@ -86,18 +85,15 @@ async function handleContact(request, env) {
   const email = clean(body.email, 254).toLowerCase();
   const phone = clean(body.phone, 40);
   const problem = clean(body.problem, 2_000);
-  const serviceInterest = clean(body.serviceInterest, 80);
-  const budgetRange = clean(body.budgetRange, 80);
-  const timeline = clean(body.timeline, 80);
+  const serviceInterest = normalizeOptionalSelect(body.serviceInterest, ALLOWED_SERVICES);
+  const budgetRange = normalizeOptionalSelect(body.budgetRange, ALLOWED_BUDGETS);
+  const timeline = normalizeOptionalSelect(body.timeline, ALLOWED_TIMELINES, "Exploratory");
 
   const errors = {};
 
   if (contactName.length < 2) errors.contactName = "Enter your name.";
   if (!isValidEmail(email)) errors.email = "Enter a valid email address.";
   if (problem.length < 20) errors.problem = "Tell us a little more about the problem you are trying to solve.";
-  if (!ALLOWED_SERVICES.has(serviceInterest)) errors.serviceInterest = "Choose a valid service option.";
-  if (!ALLOWED_BUDGETS.has(budgetRange)) errors.budgetRange = "Choose a valid budget range.";
-  if (!ALLOWED_TIMELINES.has(timeline)) errors.timeline = "Choose a valid timeline.";
 
   if (Object.keys(errors).length > 0) {
     return json({ ok: false, error: "Please correct the highlighted fields.", fields: errors }, 400);
@@ -140,6 +136,11 @@ async function handleContact(request, env) {
   }
 
   return json({ ok: true }, 201);
+}
+
+function normalizeOptionalSelect(value, allowedValues, fallback = "Not Sure") {
+  const cleaned = clean(value, 80);
+  return allowedValues.has(cleaned) ? cleaned : fallback;
 }
 
 function clean(value, maxLength) {
