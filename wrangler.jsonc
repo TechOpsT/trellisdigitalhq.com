@@ -1,7 +1,13 @@
 {
   "name": "weathered-silence-1810",
+  "main": "src/index.js",
   "compatibility_date": "2026-10-07",
   "assets": {
-    "directory": "./public"
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "vars": {
+    "NOTION_DATABASE_ID": "b7fa2bb0-b8af-4a9f-8b6c-0033394de6e0"
   }
 }
