@@ -1,3 +1,5 @@
+@import url('/assets/css/enhancements.css');
+
 .mobile-nav{display:none}
 
 @media (max-width:58rem){
