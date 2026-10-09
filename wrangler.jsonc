@@ -6,9 +6,17 @@
     "directory": "./public",
     "binding": "ASSETS",
     "not_found_handling": "404-page",
-    "run_worker_first": ["/api/*"]
+    "run_worker_first": [
+      "/api/*"
+    ]
   },
   "vars": {
     "NOTION_DATABASE_ID": "b7fa2bb0-b8af-4a9f-8b6c-0033394de6e0"
-  }
+  },
+  "analytics_engine_datasets": [
+    {
+      "binding": "CONVERSION_ANALYTICS",
+      "dataset": "trellis_conversion_events"
+    }
+  ]
 }

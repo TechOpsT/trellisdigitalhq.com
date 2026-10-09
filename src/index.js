@@ -52,7 +52,7 @@ export default {
     }
 
     if (url.pathname === "/api/event") {
-      return handleAnalyticsEvent(request);
+      return handleAnalyticsEvent(request, env);
     }
 
     return env.ASSETS.fetch(request);
@@ -196,13 +196,22 @@ async function handleContact(request, env, ctx) {
   return json({ ok: true }, 201);
 }
 
-async function handleAnalyticsEvent(request) {
+const MAX_ANALYTICS_BYTES = 2_000;
+const ANALYTICS_LABELS = new Set([
+  "Discuss your project",
+  "Consulting & Planning",
+  "Implementation & Integration",
+  "Custom Development",
+]);
+const ANALYTICS_SERVICES = new Set(ALLOWED_SERVICES);
+
+async function handleAnalyticsEvent(request, env) {
   if (request.method !== "POST") {
     return new Response(null, { status: 405, headers: { Allow: "POST" } });
   }
 
   const origin = request.headers.get("Origin");
-  if (origin && !ALLOWED_ORIGINS.has(origin)) {
+  if (!origin || !ALLOWED_ORIGINS.has(origin)) {
     return new Response(null, { status: 403 });
   }
 
@@ -212,14 +221,39 @@ async function handleAnalyticsEvent(request) {
   }
 
   const contentLength = Number(request.headers.get("Content-Length") || "0");
-  if (contentLength > 2_000) {
+  if (contentLength > MAX_ANALYTICS_BYTES) {
     return new Response(null, { status: 413 });
   }
 
+  // Read at most the permitted bytes even if Content-Length is omitted or false.
   let body;
   try {
-    body = await request.json();
+    const reader = request.body?.getReader();
+    if (!reader) return new Response(null, { status: 400 });
+    const chunks = [];
+    let size = 0;
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > MAX_ANALYTICS_BYTES) {
+        await reader.cancel().catch(() => {});
+        return new Response(null, { status: 413 });
+      }
+      chunks.push(value);
+    }
+    const bytes = new Uint8Array(size);
+    let offset = 0;
+    for (const chunk of chunks) {
+      bytes.set(chunk, offset);
+      offset += chunk.byteLength;
+    }
+    body = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(bytes));
   } catch {
+    return new Response(null, { status: 400 });
+  }
+
+  if (!body || typeof body !== "object" || Array.isArray(body)) {
     return new Response(null, { status: 400 });
   }
 
@@ -228,8 +262,23 @@ async function handleAnalyticsEvent(request) {
     return new Response(null, { status: 400 });
   }
 
-  const path = clean(body.path, 180) || "/";
+  const path = clean(body.path, 180);
+  if (!path.startsWith("/") || path.startsWith("//") || path.includes("?")) {
+    return new Response(null, { status: 400 });
+  }
+
   const metadata = sanitizeAnalyticsMetadata(body.metadata);
+
+  // Analytics are best effort: never block a customer interaction.
+  try {
+    env.CONVERSION_ANALYTICS?.writeDataPoint({
+      indexes: [event],
+      blobs: [path, metadata.label || "", metadata.service || ""],
+      doubles: [1],
+    });
+  } catch (error) {
+    console.warn("Analytics Engine write failed", error instanceof Error ? error.message : "Unknown error");
+  }
 
   console.log("trellis_analytics", {
     event,
@@ -248,10 +297,10 @@ function sanitizeAnalyticsMetadata(value) {
   if (!value || typeof value !== "object" || Array.isArray(value)) return {};
 
   const result = {};
-  for (const [key, rawValue] of Object.entries(value)) {
-    if (!["label", "service"].includes(key)) continue;
-    result[key] = clean(rawValue, 100);
-  }
+  const label = clean(value.label, 100);
+  const service = clean(value.service, 100);
+  if (ANALYTICS_LABELS.has(label)) result.label = label;
+  if (ANALYTICS_SERVICES.has(service)) result.service = service;
   return result;
 }
 
