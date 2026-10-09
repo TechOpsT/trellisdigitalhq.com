@@ -44,6 +44,10 @@
         throw new Error(result.error || "Unable to submit your inquiry.");
       }
 
+      window.trellisAnalytics?.track("contact_submit_success", {
+        service: payload.serviceInterest || "Not Sure",
+      });
+
       form.reset();
       window.turnstile?.reset();
       setStatus(
