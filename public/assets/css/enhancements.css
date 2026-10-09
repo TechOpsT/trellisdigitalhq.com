@@ -1,0 +1,38 @@
+.service-card{display:flex;flex-direction:column;text-decoration:none;color:inherit;min-height:100%}
+.service-card:hover,.service-card:focus-visible{text-decoration:none}
+.service-card:focus-visible{outline:3px solid var(--teal);outline-offset:4px}
+.service-card-link{display:inline-flex;align-items:center;gap:.45rem;margin-top:auto;padding-top:1.15rem;color:var(--teal2);font-size:.9rem;font-weight:850}
+.service-card-link span{transition:transform .18s ease}
+.service-card:hover .service-card-link span,.service-card:focus-visible .service-card-link span{transform:translateX(3px)}
+
+.not-found-main{min-height:calc(100vh - 9.75rem);display:grid;place-items:center;background:linear-gradient(118deg,#001a2e 0%,#003a58 62%,#087889 100%);padding:4rem 0;color:#fff}
+.not-found-card{max-width:52rem}
+.not-found-card h1{max-width:14ch}
+.not-found-card>p:not(.eyebrow){max-width:42rem;color:#dff0f4;font-size:1.15rem}
+.not-found-secondary{display:inline-flex;align-items:center;min-height:3.25rem;padding:0 1.2rem;border:1px solid rgba(255,255,255,.45);border-radius:5px;text-decoration:none}
+.not-found-secondary:hover{background:rgba(255,255,255,.08)}
+
+@media(max-width:58rem){
+  .hero-grid{padding:clamp(3.35rem,8vw,4.6rem) 0}
+  .section{padding:clamp(3.35rem,8vw,4.5rem) 0}
+  .contact{padding:clamp(3.35rem,8vw,4.5rem) 0}
+  .service-card{padding:1.45rem}
+  .contact-panel{padding:1.25rem}
+}
+
+@media(max-width:38rem){
+  h1{font-size:clamp(2.35rem,12vw,3.35rem)}
+  h2{font-size:clamp(1.8rem,9vw,2.4rem)}
+  .hero-actions{align-items:stretch}
+  .hero-actions .cta,.hero-actions .secondary-cta{width:100%;text-align:center}
+  .hero-actions .secondary-cta{display:flex;justify-content:center;align-items:center;min-height:3.25rem;border:1px solid rgba(255,255,255,.28);border-radius:5px;text-decoration:none}
+  .contact-layout{gap:2.5rem}
+  .contact-panel{border-radius:10px}
+  .cards{gap:1rem}
+  .service-card{box-shadow:0 10px 24px rgba(0,38,72,.07)}
+  .not-found-main{min-height:calc(100vh - 8.5rem);padding:3rem 0}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .service-card-link span{transition:none}
+}
