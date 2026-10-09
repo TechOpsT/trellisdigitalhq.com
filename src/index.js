@@ -32,12 +32,27 @@ const ALLOWED_HOSTNAMES = new Set([
   "www.trellisdigitalhq.com",
 ]);
 
+const ALLOWED_ORIGINS = new Set([
+  "https://trellisdigitalhq.com",
+  "https://www.trellisdigitalhq.com",
+]);
+
+const ALLOWED_ANALYTICS_EVENTS = new Set([
+  "hero_contact_click",
+  "service_card_click",
+  "contact_submit_success",
+]);
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
     if (url.pathname === "/api/contact") {
       return handleContact(request, env, ctx);
+    }
+
+    if (url.pathname === "/api/event") {
+      return handleAnalyticsEvent(request);
     }
 
     return env.ASSETS.fetch(request);
@@ -57,12 +72,7 @@ async function handleContact(request, env, ctx) {
   }
 
   const origin = request.headers.get("Origin");
-  const allowedOrigins = new Set([
-    "https://trellisdigitalhq.com",
-    "https://www.trellisdigitalhq.com",
-  ]);
-
-  if (origin && !allowedOrigins.has(origin)) {
+  if (origin && !ALLOWED_ORIGINS.has(origin)) {
     return json({ ok: false, error: "Invalid request origin." }, 403);
   }
 
@@ -83,7 +93,6 @@ async function handleContact(request, env, ctx) {
     return json({ ok: false, error: "Invalid request body." }, 400);
   }
 
-  // Honeypot field. Bots that populate it are silently accepted without creating a lead.
   if (string(body.website)) {
     return json({ ok: true }, 200);
   }
@@ -185,6 +194,65 @@ async function handleContact(request, env, ctx) {
   }
 
   return json({ ok: true }, 201);
+}
+
+async function handleAnalyticsEvent(request) {
+  if (request.method !== "POST") {
+    return new Response(null, { status: 405, headers: { Allow: "POST" } });
+  }
+
+  const origin = request.headers.get("Origin");
+  if (origin && !ALLOWED_ORIGINS.has(origin)) {
+    return new Response(null, { status: 403 });
+  }
+
+  const contentType = request.headers.get("Content-Type") || "";
+  if (!contentType.toLowerCase().startsWith("application/json")) {
+    return new Response(null, { status: 415 });
+  }
+
+  const contentLength = Number(request.headers.get("Content-Length") || "0");
+  if (contentLength > 2_000) {
+    return new Response(null, { status: 413 });
+  }
+
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return new Response(null, { status: 400 });
+  }
+
+  const event = clean(body.event, 80);
+  if (!ALLOWED_ANALYTICS_EVENTS.has(event)) {
+    return new Response(null, { status: 400 });
+  }
+
+  const path = clean(body.path, 180) || "/";
+  const metadata = sanitizeAnalyticsMetadata(body.metadata);
+
+  console.log("trellis_analytics", {
+    event,
+    path,
+    metadata,
+    timestamp: new Date().toISOString(),
+  });
+
+  return new Response(null, {
+    status: 204,
+    headers: { "Cache-Control": "no-store" },
+  });
+}
+
+function sanitizeAnalyticsMetadata(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+
+  const result = {};
+  for (const [key, rawValue] of Object.entries(value)) {
+    if (!["label", "service"].includes(key)) continue;
+    result[key] = clean(rawValue, 100);
+  }
+  return result;
 }
 
 async function verifyTurnstile(token, secret, remoteIp) {
