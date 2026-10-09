@@ -1,5 +1,7 @@
 const NOTION_API_VERSION = "2022-06-28";
 const MAX_BODY_BYTES = 20_000;
+const LEAD_NOTIFICATION_TO = "terrance@trellisdigitalhq.com";
+const LEAD_NOTIFICATION_FROM = "Trellis Digital Leads <leads@notify.trellisdigitalhq.com>";
 
 const ALLOWED_SERVICES = new Set([
   "Consulting & Planning",
@@ -31,18 +33,18 @@ const ALLOWED_HOSTNAMES = new Set([
 ]);
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
     if (url.pathname === "/api/contact") {
-      return handleContact(request, env);
+      return handleContact(request, env, ctx);
     }
 
     return env.ASSETS.fetch(request);
   },
 };
 
-async function handleContact(request, env) {
+async function handleContact(request, env, ctx) {
   if (request.method !== "POST") {
     return json({ ok: false, error: "Method not allowed." }, 405, {
       Allow: "POST",
@@ -161,6 +163,27 @@ async function handleContact(request, env) {
     return json({ ok: false, error: "We could not submit your request. Please email us directly." }, 502);
   }
 
+  const lead = {
+    contactName,
+    company,
+    email,
+    phone,
+    problem,
+    serviceInterest,
+    budgetRange,
+    timeline,
+  };
+
+  if (env.RESEND_API_KEY) {
+    ctx.waitUntil(
+      sendLeadNotification(env.RESEND_API_KEY, lead).catch((error) => {
+        console.error("Lead notification email failed", error instanceof Error ? error.message : "Unknown error");
+      }),
+    );
+  } else {
+    console.warn("RESEND_API_KEY is not configured; lead notification email skipped.");
+  }
+
   return json({ ok: true }, 201);
 }
 
@@ -185,6 +208,82 @@ async function verifyTurnstile(token, secret, remoteIp) {
     console.error("Turnstile Siteverify request failed", error);
     return { success: false, "error-codes": ["siteverify-request-failed"] };
   }
+}
+
+async function sendLeadNotification(apiKey, lead) {
+  const subjectName = clean(lead.company || lead.contactName, 120);
+  const subject = `New Trellis Digital Website Lead — ${subjectName}`;
+
+  const text = [
+    "New website inquiry",
+    "",
+    `Name: ${lead.contactName}`,
+    `Company: ${lead.company || "Not provided"}`,
+    `Email: ${lead.email}`,
+    `Phone: ${lead.phone || "Not provided"}`,
+    "",
+    `Service: ${lead.serviceInterest}`,
+    `Budget: ${lead.budgetRange}`,
+    `Timeline: ${lead.timeline}`,
+    "",
+    "Problem / Project:",
+    lead.problem,
+    "",
+    "This lead has been added to the Trellis Digital Notion database.",
+  ].join("\n");
+
+  const html = `
+    <div style="font-family:Arial,sans-serif;line-height:1.5;color:#1e2a36;max-width:680px">
+      <h2 style="color:#002648;margin:0 0 20px">New Trellis Digital Website Lead</h2>
+      <table style="border-collapse:collapse;width:100%;margin-bottom:24px">
+        <tbody>
+          ${emailRow("Name", lead.contactName)}
+          ${emailRow("Company", lead.company || "Not provided")}
+          ${emailRow("Email", lead.email)}
+          ${emailRow("Phone", lead.phone || "Not provided")}
+          ${emailRow("Service", lead.serviceInterest)}
+          ${emailRow("Budget", lead.budgetRange)}
+          ${emailRow("Timeline", lead.timeline)}
+        </tbody>
+      </table>
+      <h3 style="color:#002648;margin:0 0 8px">Problem / Project</h3>
+      <p style="white-space:pre-wrap;margin:0 0 24px">${escapeHtml(lead.problem)}</p>
+      <p style="font-size:13px;color:#61717e;margin:0">This lead has been added to the Trellis Digital Notion database.</p>
+    </div>`;
+
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: LEAD_NOTIFICATION_FROM,
+      to: [LEAD_NOTIFICATION_TO],
+      reply_to: lead.email,
+      subject,
+      text,
+      html,
+    }),
+  });
+
+  if (!response.ok) {
+    const details = await response.text();
+    throw new Error(`Resend API returned ${response.status}: ${details.slice(0, 500)}`);
+  }
+}
+
+function emailRow(label, value) {
+  return `<tr><th style="text-align:left;padding:6px 12px 6px 0;color:#002648;vertical-align:top">${escapeHtml(label)}</th><td style="padding:6px 0">${escapeHtml(value)}</td></tr>`;
+}
+
+function escapeHtml(value) {
+  return string(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 function normalizeOptionalSelect(value, allowedValues, fallback = "Not Sure") {
