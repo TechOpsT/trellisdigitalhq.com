@@ -10,4 +10,4 @@
 .founder-role{margin:0 0 1.25rem;color:#526575;font-weight:800}
 .founder-copy>p:last-child{max-width:42rem;color:#465762}
 @media(max-width:58rem){.founder-layout{grid-template-columns:minmax(8rem,8rem) minmax(0,1fr);gap:2rem}.founder-photo-frame{height:8rem}}
-@media(max-width:38rem){.founder-layout{grid-template-columns:1fr}.founder-photo-frame{width:min(100%,6rem);height:6rem;margin:0 auto}.founder-copy{grid-row:1}}
+@media(max-width:38rem){.founder-layout{grid-template-columns:1fr}.founder-photo-frame{width:min(100%,5.5rem);height:5.5rem;margin:0 auto}.founder-copy{grid-row:1}}
