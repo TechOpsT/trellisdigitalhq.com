@@ -67,7 +67,12 @@ async function handleContact(request, env, ctx) {
     });
   }
 
-  // Preview builds must never send lead data to production integrations.\n  if (env.PREVIEW_MODE === "true") {\n    return json({ ok: false, error: "Contact submissions are disabled in preview environments." }, 503);\n  }\n\n  if (!env.NOTION_TOKEN || !env.NOTION_DATABASE_ID || !env.TURNSTILE_SECRET) {
+  // Preview builds must never send lead data to production integrations.
+  if (env.PREVIEW_MODE === "true") {
+    return json({ ok: false, error: "Contact submissions are disabled in preview environments." }, 503);
+  }
+
+  if (!env.NOTION_TOKEN || !env.NOTION_DATABASE_ID || !env.TURNSTILE_SECRET) {
     console.error("Contact API is missing required configuration.");
     return json({ ok: false, error: "Contact service is not configured." }, 503);
   }
