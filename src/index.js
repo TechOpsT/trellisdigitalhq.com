@@ -216,8 +216,8 @@ async function handleContact(request, env, ctx) {
 // Never classify on nationality, location, or email domain.
 function isLikelySalesSolicitation(problem, company) {
   const text = `${problem} ${company}`.toLowerCase();
-  const salesOffer = /\\b(?:we (?:offer|provide|speciali[sz]e in)|our (?:agency|team|services?)|i (?:offer|provide)|would (?:you|u) (?:like|be interested)|can (?:we|i) help you|free (?:seo|marketing|website) audit)\\b/i;
-  const marketingService = /\\b(?:seo|search engine optimi[sz]ation|backlinks?|guest posts?|lead generation|google ads|digital marketing|social media marketing|website redesign|web design|ranking on google)\\b/i;
+  const salesOffer = /\b(?:we (?:offer|provide|speciali[sz]e in)|our (?:agency|team|services?)|i (?:offer|provide)|would (?:you|u) (?:like|be interested)|can (?:we|i) help you|free (?:seo|marketing|website) audit)\b/i;
+  const marketingService = /\b(?:seo|search engine optimi[sz]ation|backlinks?|guest posts?|lead generation|google ads|digital marketing|social media marketing|website redesign|web design|ranking on google)\b/i;
   return salesOffer.test(text) && marketingService.test(text);
 }
 
