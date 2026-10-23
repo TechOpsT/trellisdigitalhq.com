@@ -136,6 +136,22 @@ async function handleContact(request, env, ctx) {
     return json({ ok: false, error: "Please correct the highlighted fields.", fields: errors }, 400);
   }
 
+  // Apply limits after Turnstile, before any external writes.
+  // Cloudflare's native limiter is shared across Worker instances.
+  if (env.CONTACT_RATE_LIMITER) {
+    const ip = request.headers.get("CF-Connecting-IP");
+    if (ip) {
+      try {
+        const { success } = await env.CONTACT_RATE_LIMITER.limit({ key: ip });
+        if (!success) return json({ ok: false, error: "Too many requests. Please try again later." }, 429, { "Retry-After": "60" });
+      } catch (error) {
+        console.error("Contact rate limiter unavailable", error instanceof Error ? error.message : "Unknown error");
+        return json({ ok: false, error: "Contact service is temporarily unavailable." }, 503);
+      }
+    }
+  }
+
+  const spamReview = isLikelySalesSolicitation(problem, company);
   const leadTitle = company || contactName;
 
   const properties = {
@@ -146,7 +162,7 @@ async function handleContact(request, env, ctx) {
     "Service Interest": { select: { name: serviceInterest } },
     "Budget Range": { select: { name: budgetRange } },
     Timeline: { select: { name: timeline } },
-    "Lead Status": { select: { name: "New" } },
+    "Lead Status": { select: { name: spamReview ? "Spam" : "New" } },
     Source: { select: { name: "Website" } },
   };
 
@@ -183,7 +199,7 @@ async function handleContact(request, env, ctx) {
     timeline,
   };
 
-  if (env.RESEND_API_KEY) {
+  if (!spamReview && env.RESEND_API_KEY) {
     ctx.waitUntil(
       sendLeadNotification(env.RESEND_API_KEY, lead).catch((error) => {
         console.error("Lead notification email failed", error instanceof Error ? error.message : "Unknown error");
@@ -194,6 +210,15 @@ async function handleContact(request, env, ctx) {
   }
 
   return json({ ok: true }, 201);
+}
+
+// Conservative classification: require an explicit unsolicited sales offer.
+// Never classify on nationality, location, or email domain.
+function isLikelySalesSolicitation(problem, company) {
+  const text = `${problem} ${company}`.toLowerCase();
+  const salesOffer = /\\b(?:we (?:offer|provide|speciali[sz]e in)|our (?:agency|team|services?)|i (?:offer|provide)|would (?:you|u) (?:like|be interested)|can (?:we|i) help you|free (?:seo|marketing|website) audit)\\b/i;
+  const marketingService = /\\b(?:seo|search engine optimi[sz]ation|backlinks?|guest posts?|lead generation|google ads|digital marketing|social media marketing|website redesign|web design|ranking on google)\\b/i;
+  return salesOffer.test(text) && marketingService.test(text);
 }
 
 const MAX_ANALYTICS_BYTES = 2_000;
