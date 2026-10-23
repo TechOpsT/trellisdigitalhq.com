@@ -214,6 +214,7 @@ async function handleContact(request, env, ctx) {
 
 // Conservative classification: require an explicit unsolicited sales offer.
 // Never classify on nationality, location, or email domain.
+// Contact form spam protection
 function isLikelySalesSolicitation(problem, company) {
   const text = `${problem} ${company}`.toLowerCase();
   const salesOffer = /\b(?:we (?:offer|provide|speciali[sz]e in)|our (?:agency|team|services?)|i (?:offer|provide)|would (?:you|u) (?:like|be interested)|can (?:we|i) help you|free (?:seo|marketing|website) audit)\b/i;
