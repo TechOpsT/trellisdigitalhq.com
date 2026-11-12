@@ -65,7 +65,7 @@
       );
     } finally {
       submitButton.disabled = false;
-      submitButton.textContent = "Send project inquiry";
+      submitButton.textContent = "Send inquiry";
     }
   });
 

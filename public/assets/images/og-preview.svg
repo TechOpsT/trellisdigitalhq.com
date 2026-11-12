@@ -1,26 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
-  <title id="title">Trellis Digital social preview</title>
-  <desc id="desc">Trellis Digital technology & engineering consulting</desc>
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#001a2e"/>
-      <stop offset="0.58" stop-color="#002648"/>
-      <stop offset="1" stop-color="#087889"/>
-    </linearGradient>
-  </defs>
-  <rect width="1200" height="630" fill="url(#bg)"/>
-  <rect x="0" y="0" width="1200" height="10" fill="#01A4BB"/>
-  <g opacity="0.16" fill="none" stroke="#ffffff">
-    <rect x="900" y="95" width="180" height="180" transform="rotate(8 990 185)"/>
-    <rect x="815" y="285" width="140" height="140" transform="rotate(-11 885 355)"/>
-    <rect x="1010" y="340" width="90" height="90" transform="rotate(7 1055 385)"/>
-  </g>
-  <rect x="78" y="82" width="82" height="82" rx="14" fill="#002648" stroke="#01A4BB" stroke-width="2"/>
-  <text x="119" y="138" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" fill="#01A4BB">T</text>
-  <text x="190" y="126" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="700" fill="#ffffff">Trellis Digital</text>
-  <text x="190" y="160" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" letter-spacing="2" fill="#94ebf0">TECHNOLOGY &amp; ENGINEERING CONSULTING</text>
-  <text x="78" y="285" font-family="Arial, Helvetica, sans-serif" font-size="66" font-weight="700" fill="#ffffff">Technology should</text>
-  <text x="78" y="360" font-family="Arial, Helvetica, sans-serif" font-size="66" font-weight="700" fill="#ffffff">solve business problems.</text>
-  <text x="78" y="430" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#dff0f4">Consulting · Integration · Automation · Custom Software</text>
-  <text x="78" y="535" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#94ebf0">trellisdigitalhq.com</text>
+<title id="title">Trellis Digital — practical digital support</title>
+<desc id="desc">Trellis Digital helps small businesses improve everyday workflows and build focused digital tools.</desc>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#001a2e"/><stop offset=".58" stop-color="#002648"/><stop offset="1" stop-color="#087889"/></linearGradient></defs>
+<rect width="1200" height="630" fill="url(#bg)"/><rect width="1200" height="10" fill="#01a4bb"/>
+<rect x="78" y="68" width="72" height="72" rx="12" fill="#002648" stroke="#01a4bb" stroke-width="2"/><text x="114" y="119" text-anchor="middle" font-family="Arial,sans-serif" font-size="44" font-weight="700" fill="#01a4bb">T</text>
+<text x="172" y="105" font-family="Arial,sans-serif" font-size="38" font-weight="700" fill="#fff">Trellis Digital</text><text x="172" y="133" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="#94ebf0">SMALL-BUSINESS DIGITAL SUPPORT</text>
+<text x="78" y="236" font-family="Arial,sans-serif" font-size="42" font-weight="700" fill="#fff">We help small businesses</text><text x="78" y="291" font-family="Arial,sans-serif" font-size="42" font-weight="700" fill="#fff">work better with technology.</text>
+<text x="78" y="371" font-family="Arial,sans-serif" font-size="26" font-weight="700" fill="#dff0f4">Improve everyday workflows.</text><text x="78" y="415" font-family="Arial,sans-serif" font-size="26" font-weight="700" fill="#dff0f4">Build focused digital tools.</text>
+<rect x="760" y="164" width="370" height="135" rx="16" fill="#fff"/><circle cx="803" cy="205" r="19" fill="#eaf4f6"/><text x="803" y="210" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" font-weight="700" fill="#002648">01</text><text x="840" y="197" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#002648">Improve your workflow</text><text x="840" y="235" font-family="Arial,sans-serif" font-size="14" fill="#45545f">Connect tools. Reduce repeat tasks.</text><rect x="840" y="258" width="208" height="5" rx="3" fill="#01a4bb"/>
+<rect x="760" y="335" width="370" height="135" rx="16" fill="#fff"/><circle cx="803" cy="376" r="19" fill="#eaf4f6"/><text x="803" y="381" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" font-weight="700" fill="#002648">02</text><text x="840" y="368" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#002648">Build a focused tool</text><text x="840" y="406" font-family="Arial,sans-serif" font-size="14" fill="#45545f">Create a simple web tool that fits.</text><rect x="840" y="429" width="208" height="5" rx="3" fill="#01a4bb"/>
+<text x="78" y="548" font-family="Arial,sans-serif" font-size="19" fill="#94ebf0">Small businesses · Nonprofits · St. Louis, Missouri</text>
 </svg>

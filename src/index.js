@@ -5,9 +5,8 @@ const LEAD_NOTIFICATION_TO = "terrance@trellisdigitalhq.com";
 const LEAD_NOTIFICATION_FROM = "Trellis Digital Leads <leads@notify.trellisdigitalhq.com>";
 
 const ALLOWED_SERVICES = new Set([
-  "Product Strategy",
-  "Digital Experience Design",
-  "Custom Software",
+  "Improve how your business works",
+  "Build a tool your business needs",
   "Not Sure",
 ]);
 
@@ -229,10 +228,9 @@ function isLikelySalesSolicitation(problem, company) {
 
 const MAX_ANALYTICS_BYTES = 2_000;
 const ANALYTICS_LABELS = new Set([
-  "Talk about your idea",
-  "Product Strategy",
-  "Digital Experience Design",
-  "Custom Software",
+  "Talk through a workflow",
+  "Improve your workflow",
+  "Build a custom tool",
 ]);
 const ANALYTICS_SERVICES = new Set(ALLOWED_SERVICES);
 
