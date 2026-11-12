@@ -84,3 +84,27 @@
 @media(max-width:760px){.path-grid,.example-layout{grid-template-columns:1fr}.path-card{min-height:0}.example-layout{gap:1.4rem}}
 
 @media(max-width:760px){.hero h1{font-size:clamp(2.4rem,10vw,3rem);max-width:14ch}}
+
+/* Keep the hero graphic in its own column and give the headline room. */
+.hero-grid{grid-template-columns:minmax(0,1.05fr) minmax(17rem,.95fr);gap:clamp(1.5rem,4vw,3.5rem)}
+.hero-copy{position:relative;z-index:1;min-width:0}
+.hero h1{font-size:clamp(2.6rem,5vw,4.2rem);line-height:1.04;max-width:13ch}
+.hero-accent.studio-visual{overflow:hidden;border-radius:1rem;min-width:0}
+.studio-window{transform:none;max-width:100%}
+@media(max-width:760px){.hero h1{font-size:clamp(2.3rem,8vw,2.75rem);max-width:14ch}.hero-accent.studio-visual{min-height:21rem;margin:0 auto;width:100%;max-width:32rem}}
+
+/* Give every workflow step a readable text column. */
+.example-flow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}
+.example-flow .example-step{display:grid;grid-template-columns:2rem minmax(0,1fr);align-items:start;gap:.7rem;padding:.9rem .75rem;border:1px solid var(--line);border-radius:.65rem;background:#fff;min-width:0}
+.example-flow .example-step>span{display:grid;place-items:center;width:1.8rem;height:1.8rem;border-radius:50%;background:var(--navy);color:#fff;font-size:.65rem;font-weight:850}
+.example-flow .example-step>div{min-width:0}
+.example-flow .example-step strong,.example-flow .example-step small{display:block;overflow-wrap:anywhere}
+.example-flow .example-step strong{color:var(--navy);font-size:.9rem}
+.example-flow .example-step small{margin-top:.2rem;color:var(--muted);font-size:.8rem;line-height:1.45}
+@media(max-width:760px){.example-flow{grid-template-columns:1fr}.example-layout{gap:1.25rem}}
+.preview-form-note{margin:0 0 .7rem!important;padding:.75rem .9rem;border-left:3px solid var(--teal);background:rgba(255,255,255,.08);color:#d8edf2!important;font-size:.85rem!important}
+
+/* Override the older decorative-span rules inside the hero illustration. */
+.hero-accent.studio-visual span{position:static;inset:auto;width:auto;height:auto;border:0;background:transparent;transform:none}
+.hero-accent.studio-visual .studio-window-top span{display:block;width:.45rem;height:.45rem;border-radius:50%;background:#b8c8d0}
+.hero-accent.studio-visual .studio-window-button span{display:inline;margin-left:1.1rem;color:var(--teal)}
