@@ -5,18 +5,16 @@ const LEAD_NOTIFICATION_TO = "terrance@trellisdigitalhq.com";
 const LEAD_NOTIFICATION_FROM = "Trellis Digital Leads <leads@notify.trellisdigitalhq.com>";
 
 const ALLOWED_SERVICES = new Set([
-  "Consulting & Planning",
-  "Implementation & Integration",
-  "Custom Development",
+  "Improve how your business works",
+  "Build a tool your business needs",
   "Not Sure",
 ]);
 
 const ALLOWED_BUDGETS = new Set([
-  "Under $1000",
-  "$1000–$2500",
-  "$2500–$5000",
-  "$5000–$10000",
-  "$10000+",
+  "Under $2,500",
+  "$2,500–$5,000",
+  "$5,000–$10,000",
+  "$10,000+",
   "Not Sure",
 ]);
 
@@ -230,10 +228,9 @@ function isLikelySalesSolicitation(problem, company) {
 
 const MAX_ANALYTICS_BYTES = 2_000;
 const ANALYTICS_LABELS = new Set([
-  "Discuss your project",
-  "Consulting & Planning",
-  "Implementation & Integration",
-  "Custom Development",
+  "Talk through a workflow",
+  "Improve your workflow",
+  "Build a custom tool",
 ]);
 const ANALYTICS_SERVICES = new Set(ALLOWED_SERVICES);
 

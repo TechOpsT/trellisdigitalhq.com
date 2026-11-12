@@ -6,6 +6,19 @@
   const submitButton = form.querySelector("button[type='submit']");
   const status = form.querySelector("[data-form-status]");
 
+  const productionHosts = new Set(["trellisdigitalhq.com", "www.trellisdigitalhq.com"]);
+  if (!productionHosts.has(window.location.hostname)) {
+    form.querySelectorAll("input, select, textarea, button").forEach((control) => {
+      control.disabled = true;
+    });
+    const previewNote = document.createElement("p");
+    previewNote.className = "preview-form-note";
+    previewNote.setAttribute("role", "status");
+    previewNote.textContent = "The contact form is disabled on this review preview. The live site uses a security check before it accepts inquiries.";
+    form.insertBefore(previewNote, submitButton);
+    return;
+  }
+
   installTurnstile(form, submitButton);
 
   form.addEventListener("submit", async (event) => {
@@ -65,7 +78,7 @@
       );
     } finally {
       submitButton.disabled = false;
-      submitButton.textContent = "Send project inquiry";
+      submitButton.textContent = "Send inquiry";
     }
   });
 
