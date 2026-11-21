@@ -180,10 +180,10 @@ test("demo clock copy stays plain", () => {
   assert.match(formatDemoClock(now), /\d/);
 });
 
-test("the sample page is labeled fictional, noindexed, and offline", () => {
+test("the sample page is labeled fictional and stays offline", () => {
   const page = readFileSync(pagePath, "utf8");
   const script = readFileSync(scriptPath, "utf8");
-  assert.match(page, /<meta name="robots" content="noindex, nofollow">/);
+  assert.doesNotMatch(page, /noindex/i);
   assert.match(page, /Sample project/);
   assert.match(page, /Gateway Plumbing &amp; Heating/);
   assert.match(page, /fictional/i);
@@ -198,16 +198,28 @@ test("the sample page is labeled fictional, noindexed, and offline", () => {
   assert.match(script, /localStorage/);
 });
 
-test("existing pages, nav, and the sitemap do not link to the sample", () => {
+test("the homepage links the sample, and the sitemap includes it", () => {
+  const home = readFileSync(join(root, "public/index.html"), "utf8");
+  assert.match(home, /href="\/sample-projects\/gateway-plumbing\/"/);
+  assert.match(home, /See a sample project/);
+  assert.match(home, /Fictional company, built to show the workflow/);
+  const toolCard = home.slice(home.indexOf("Build a tool your business needs"), home.indexOf("example-section"));
+  assert.match(toolCard, /See a sample project/);
+
   const pages = htmlFiles(join(root, "public"))
-    .filter((path) => !path.includes(`${sep}sample-projects${sep}`));
+    .filter((path) => !path.endsWith(`${sep}public${sep}index.html`) && !path.includes(`${sep}sample-projects${sep}`));
   pages.push(join(root, "index.html"));
   for (const path of pages) {
     const html = readFileSync(path, "utf8");
     assert.doesNotMatch(html, /sample-projects|gateway-plumbing|Gateway Plumbing/);
   }
+  const nav = home.slice(home.indexOf("<header"), home.indexOf("</header>"));
+  assert.doesNotMatch(nav, /sample-projects|gateway-plumbing/);
+
   const sitemap = readFileSync(join(root, "public/sitemap.xml"), "utf8");
-  assert.doesNotMatch(sitemap, /sample-projects|gateway-plumbing/);
+  assert.match(sitemap, /https:\/\/trellisdigitalhq\.com\/sample-projects\/gateway-plumbing\//);
+  const robots = readFileSync(join(root, "public/robots.txt"), "utf8");
+  assert.doesNotMatch(robots, /sample-projects|Disallow/);
   const headers = readFileSync(join(root, "public/_headers"), "utf8");
-  assert.match(headers, /\/sample-projects\/gateway-plumbing\/?\n {2}X-Robots-Tag: noindex, nofollow/);
+  assert.doesNotMatch(headers, /\/sample-projects\/gateway-plumbing/);
 });

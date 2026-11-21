@@ -108,3 +108,7 @@
 .hero-accent.studio-visual span{position:static;inset:auto;width:auto;height:auto;border:0;background:transparent;transform:none}
 .hero-accent.studio-visual .studio-window-top span{display:block;width:.45rem;height:.45rem;border-radius:50%;background:#b8c8d0}
 .hero-accent.studio-visual .studio-window-button span{display:inline;margin-left:1.1rem;color:var(--teal)}
+
+.sample-project-link{display:grid;gap:.2rem;margin-top:.85rem;align-self:flex-start;max-width:22rem}
+.path-card .sample-project-link .service-card-link{margin-top:0}
+.sample-project-link p{margin:0;color:var(--muted);font-size:.82rem;line-height:1.4}
