@@ -183,7 +183,7 @@ test("demo clock copy stays plain", () => {
 test("the sample page is labeled fictional and stays offline", () => {
   const page = readFileSync(pagePath, "utf8");
   const script = readFileSync(scriptPath, "utf8");
-  assert.doesNotMatch(page, /noindex/i);
+  assert.match(page, /<meta name="robots" content="noindex, nofollow">/);
   assert.match(page, /Sample project/);
   assert.match(page, /Gateway Plumbing &amp; Heating/);
   assert.match(page, /fictional/i);
@@ -198,7 +198,7 @@ test("the sample page is labeled fictional and stays offline", () => {
   assert.match(script, /localStorage/);
 });
 
-test("the homepage links the sample, and the sitemap includes it", () => {
+test("the homepage links the sample, and the sitemap omits it", () => {
   const home = readFileSync(join(root, "public/index.html"), "utf8");
   assert.match(home, /href="\/sample-projects\/gateway-plumbing\/"/);
   assert.match(home, /See a sample project/);
@@ -217,7 +217,7 @@ test("the homepage links the sample, and the sitemap includes it", () => {
   assert.doesNotMatch(nav, /sample-projects|gateway-plumbing/);
 
   const sitemap = readFileSync(join(root, "public/sitemap.xml"), "utf8");
-  assert.match(sitemap, /https:\/\/trellisdigitalhq\.com\/sample-projects\/gateway-plumbing\//);
+  assert.doesNotMatch(sitemap, /sample-projects|gateway-plumbing/);
   const robots = readFileSync(join(root, "public/robots.txt"), "utf8");
   assert.doesNotMatch(robots, /sample-projects|Disallow/);
   const headers = readFileSync(join(root, "public/_headers"), "utf8");
