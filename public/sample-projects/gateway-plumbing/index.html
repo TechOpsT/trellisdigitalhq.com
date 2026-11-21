@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Sample project: Gateway Plumbing &amp; Heating (fictional) | Trellis Digital</title>
+  <meta name="description" content="Sample project for Trellis Digital. Gateway Plumbing &amp; Heating is a fictional St. Louis shop. This browser-only demo shows a quote and visit request list. It is not a client.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#002648">
+  <meta property="og:title" content="Sample project: Gateway Plumbing &amp; Heating (fictional) | Trellis Digital">
+  <meta property="og:description" content="A fictional sample of a quote and booking flow. Not a Trellis Digital client. No results or reviews.">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="64x64" href="/assets/images/favicon.png">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="/assets/css/mobile-nav.css">
+  <link rel="stylesheet" href="/assets/css/sample-demo.css?v=gateway-sample-1">
+</head>
+<body class="sample-page">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="gp-top">
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="brand" href="/" aria-label="Trellis Digital home">
+          <span class="brand-mark" aria-hidden="true">T</span>
+          <span class="brand-copy"><strong>Trellis Digital</strong><small>Small-business digital support</small></span>
+        </a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="/">Home</a>
+          <a href="/#contact">Contact</a>
+        </nav>
+        <details class="mobile-nav">
+          <summary aria-label="Open navigation menu">
+            <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+            <span class="menu-label">Menu</span>
+          </summary>
+          <nav aria-label="Mobile navigation">
+            <a href="/">Home</a>
+            <a href="/#contact">Contact</a>
+          </nav>
+        </details>
+      </div>
+    </header>
+    <div class="gp-banner" role="note">
+      <p class="wrap">Sample project. Gateway Plumbing &amp; Heating is a fictional company, not a Trellis Digital client. No request, photo, email, or text leaves this browser.</p>
+    </div>
+  </div>
+
+  <main id="main">
+    <section class="gp-hero" aria-labelledby="gp-title">
+      <div class="wrap">
+        <p class="eyebrow">Sample project · Fictional company</p>
+        <h1 id="gp-title">A simple quote and booking flow.</h1>
+        <p class="lede">Gateway Plumbing &amp; Heating is a fictional St. Louis home-services shop. This page shows a customer asking for a quote or a visit, and the office keeping that request on one list. It is a sample project, not a client. Nothing on this page is a result, a review, or a real booking.</p>
+      </div>
+    </section>
+
+    <section class="gp-block" aria-labelledby="gp-compare-title">
+      <div class="wrap">
+        <h2 id="gp-compare-title">Two ways a request can come in</h2>
+        <div class="gp-compare">
+          <article class="gp-compare-card">
+            <h3>Phone tag and paper forms</h3>
+            <p>The customer calls. If the shop is out on a job, the request waits in voicemail, a text, or an email. Someone writes it on a paper form or a notepad. Calling back depends on remembering which notes still need an answer.</p>
+          </article>
+          <article class="gp-compare-card">
+            <h3>An online quote or visit request</h3>
+            <p>The customer enters the job, can attach a photo, and picks a few times. The request shows up on a list marked New, Quoted, Scheduled, or Done. A confirmation is ready to show, and a reminder can appear if a new request is still waiting.</p>
+          </article>
+        </div>
+        <p class="gp-note">The list below is a sample of that online flow. It runs in this browser and does not send email, text, or photos.</p>
+      </div>
+    </section>
+
+    <section class="gp-block gp-demo-section" aria-labelledby="gp-demo-title">
+      <div class="wrap">
+        <h2 id="gp-demo-title">Try the sample</h2>
+        <p class="gp-note">Use made-up contact details. The office view shows the same list, including a few fictional examples already filled in.</p>
+        <div class="gp-tool" id="gp-tool">
+          <noscript>
+            <p class="gp-note">This sample needs JavaScript to run in the browser. It still does not send data anywhere.</p>
+          </noscript>
+          <div class="gp-toolbar">
+            <p class="gp-clock" id="gp-clock">Demo clock: loading.</p>
+            <div class="gp-toolbar-actions" role="group" aria-label="Demo clock controls" aria-describedby="gp-clock-help">
+              <button type="button" class="gp-button gp-button-secondary" id="gp-forward-4h">Fast-forward 4 hours</button>
+              <button type="button" class="gp-button gp-button-secondary" id="gp-forward-1d">Fast-forward 1 day</button>
+              <button type="button" class="gp-button gp-button-secondary" id="gp-back-now" disabled>Back to real time</button>
+              <button type="button" class="gp-button gp-button-ghost" id="gp-reset" aria-expanded="false" aria-controls="gp-reset-confirm">Reset demo</button>
+            </div>
+          </div>
+          <p class="gp-help" id="gp-clock-help">A request that stays New for 4 hours shows a no-response reminder. Fast-forward moves only this demo clock.</p>
+          <div class="gp-reset-confirm" id="gp-reset-confirm" hidden>
+            <p id="gp-reset-question" tabindex="-1">Reset the sample? This clears requests saved in this browser and restores the fictional examples.</p>
+            <div class="gp-reset-actions">
+              <button type="button" class="gp-button gp-button-primary" id="gp-reset-yes">Reset sample data</button>
+              <button type="button" class="gp-button gp-button-secondary" id="gp-reset-no">Keep sample data</button>
+            </div>
+          </div>
+
+          <div class="gp-tabs" id="gp-tablist" role="tablist" aria-label="Sample views">
+            <button type="button" role="tab" id="tab-customer" aria-controls="panel-customer" aria-selected="true">Customer view</button>
+            <button type="button" role="tab" id="tab-office" aria-controls="panel-office" aria-selected="false" tabindex="-1">Office view</button>
+          </div>
+
+          <div role="tabpanel" id="panel-customer" class="gp-panel" aria-labelledby="tab-customer">
+            <h3>Customer view · fictional company</h3>
+            <div class="gp-shop">
+              <p class="gp-kicker">Fictional company</p>
+              <p class="gp-shop-name">Gateway Plumbing &amp; Heating</p>
+              <p class="gp-shop-meta">St. Louis home services · Sample project</p>
+            </div>
+            <div id="gp-form-wrap" class="gp-form-wrap">
+              <form id="gp-form" class="gp-form" action="/sample-projects/gateway-plumbing/" method="post" novalidate autocomplete="off" onsubmit="return false">
+                <div id="gp-summary" class="gp-summary" role="alert" tabindex="-1"></div>
+                <div class="gp-fill-row">
+                  <button type="button" class="gp-button gp-button-secondary" id="gp-fill">Fill with sample data</button>
+                  <p class="gp-help">Drops in a fictional request you can edit.</p>
+                </div>
+                <fieldset id="gp-kind" tabindex="-1" aria-describedby="gp-kind-error">
+                  <legend>What do you need?</legend>
+                  <div class="gp-choices">
+                    <label class="gp-choice"><input id="gp-kind-quote" type="radio" name="kind" value="quote" required> Request a quote</label>
+                    <label class="gp-choice"><input id="gp-kind-visit" type="radio" name="kind" value="visit" required> Book a visit</label>
+                  </div>
+                  <p id="gp-kind-error" class="gp-error"></p>
+                </fieldset>
+                <div class="gp-field">
+                  <label for="gp-service">Service</label>
+                  <select id="gp-service" name="service" required aria-describedby="gp-service-error">
+                    <option value="">Choose a service</option>
+                    <option value="leak-drain">Leak or drain</option>
+                    <option value="water-heater">Water heater</option>
+                    <option value="furnace-ac">Furnace or AC</option>
+                    <option value="other">Other</option>
+                  </select>
+                  <p id="gp-service-error" class="gp-error"></p>
+                </div>
+                <div class="gp-field">
+                  <label for="gp-description">What is going on?</label>
+                  <textarea id="gp-description" name="description" required maxlength="1000" rows="4" aria-describedby="gp-description-help gp-description-error" placeholder="Example: water under the kitchen sink. Sample text only."></textarea>
+                  <p id="gp-description-help" class="gp-help">A sentence is enough. Keep it fictional.</p>
+                  <p id="gp-description-error" class="gp-error"></p>
+                </div>
+                <div class="gp-field">
+                  <label for="gp-photo">Photo of the problem <span class="gp-help">(optional)</span></label>
+                  <p id="gp-photo-help" class="gp-help">Preview only. The file stays in this browser and is not uploaded.</p>
+                  <input id="gp-photo" name="photo" type="file" accept="image/jpeg,image/png,image/webp,image/gif" aria-describedby="gp-photo-help gp-photo-status gp-photo-error">
+                  <p id="gp-photo-status" class="gp-help" role="status"></p>
+                  <p id="gp-photo-error" class="gp-error"></p>
+                  <div id="gp-photo-preview" class="gp-photo-preview" hidden></div>
+                </div>
+                <fieldset id="gp-contact" tabindex="-1">
+                  <legend>Sample contact details</legend>
+                  <p class="gp-help">Use a made-up name, a 555 phone number, and an email at example.com. These fields do not accept real contact details.</p>
+                  <div class="gp-contact-grid">
+                    <div class="gp-field">
+                      <label for="gp-name">Name</label>
+                      <input id="gp-name" name="name" type="text" required maxlength="80" autocomplete="off" spellcheck="false" placeholder="Avery Sample" aria-describedby="gp-name-error">
+                      <p id="gp-name-error" class="gp-error"></p>
+                    </div>
+                    <div class="gp-field">
+                      <label for="gp-phone">Phone</label>
+                      <input id="gp-phone" name="phone" type="tel" inputmode="tel" required maxlength="40" autocomplete="off" spellcheck="false" placeholder="(314) 555-0199" aria-describedby="gp-phone-error">
+                      <p id="gp-phone-error" class="gp-error"></p>
+                    </div>
+                    <div class="gp-field gp-span-2">
+                      <label for="gp-email">Email</label>
+                      <input id="gp-email" name="email" type="email" inputmode="email" required maxlength="120" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="name@example.com" aria-describedby="gp-email-error">
+                      <p id="gp-email-error" class="gp-error"></p>
+                    </div>
+                  </div>
+                </fieldset>
+                <fieldset id="gp-slots" tabindex="-1" aria-describedby="gp-slots-help gp-slots-error">
+                  <legend>Times that work</legend>
+                  <p id="gp-slots-help" class="gp-help">Pick a few sample windows. This does not reserve a real appointment.</p>
+                  <div class="gp-choices gp-slots">
+                    <label class="gp-choice"><input id="gp-slot-weekday-morning" type="checkbox" name="slots" value="weekday-morning"> Weekday morning (8-11)</label>
+                    <label class="gp-choice"><input id="gp-slot-weekday-afternoon" type="checkbox" name="slots" value="weekday-afternoon"> Weekday afternoon (12-4)</label>
+                    <label class="gp-choice"><input id="gp-slot-weekday-evening" type="checkbox" name="slots" value="weekday-evening"> Weekday evening (4-7)</label>
+                    <label class="gp-choice"><input id="gp-slot-saturday-morning" type="checkbox" name="slots" value="saturday-morning"> Saturday morning (8-12)</label>
+                  </div>
+                  <p id="gp-slots-error" class="gp-error"></p>
+                </fieldset>
+                <div class="gp-form-actions">
+                  <button type="submit" class="gp-button gp-button-primary gp-submit" id="gp-submit">Save sample request</button>
+                  <p class="gp-help">Saves in this browser only. Nothing is emailed, texted, or uploaded.</p>
+                </div>
+              </form>
+            </div>
+            <div id="gp-confirmation" hidden></div>
+          </div>
+
+          <div role="tabpanel" id="panel-office" class="gp-panel" aria-labelledby="tab-office" hidden>
+            <h3>Office view · fictional company</h3>
+            <div class="gp-shop">
+              <p class="gp-kicker">Fictional company</p>
+              <p class="gp-shop-name">Gateway Plumbing &amp; Heating</p>
+              <p class="gp-shop-meta">Sample requests saved in this browser. New ones from the customer view show up here. Assignees are fictional sample names.</p>
+            </div>
+            <div class="gp-filters" id="gp-filters" role="group" aria-label="Filter by status">
+              <button type="button" data-filter="all" aria-pressed="true">All</button>
+              <button type="button" data-filter="New" aria-pressed="false">New</button>
+              <button type="button" data-filter="Quoted" aria-pressed="false">Quoted</button>
+              <button type="button" data-filter="Scheduled" aria-pressed="false">Scheduled</button>
+              <button type="button" data-filter="Done" aria-pressed="false">Done</button>
+            </div>
+            <p class="gp-filter-status" id="gp-filter-status"></p>
+            <p class="gp-reminder-count" id="gp-reminder-count"></p>
+            <div id="gp-list"></div>
+          </div>
+          <div id="gp-announce" class="gp-visually-hidden" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <span>&copy; 2026 Trellis Digital LLC</span>
+      <nav class="footer-nav" aria-label="Legal">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+      </nav>
+      <span>Practical digital support for small businesses and nonprofits · St. Louis, Missouri</span>
+    </div>
+  </footer>
+  <script type="module" src="/assets/js/gateway-plumbing-demo.js?v=gateway-sample-1"></script>
+</body>
+</html>
