@@ -11,3 +11,13 @@
 
 https://:version.:subdomain.workers.dev/*
   X-Robots-Tag: noindex, nofollow
+
+# Hidden sample. Direct URL only; also marked noindex in the page head.
+/sample-projects/gateway-plumbing
+  X-Robots-Tag: noindex, nofollow
+
+/sample-projects/gateway-plumbing/
+  X-Robots-Tag: noindex, nofollow
+
+/sample-projects/gateway-plumbing/*
+  X-Robots-Tag: noindex, nofollow
